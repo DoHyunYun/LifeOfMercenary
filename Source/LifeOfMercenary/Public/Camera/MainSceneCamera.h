@@ -42,6 +42,9 @@ private:
 	FVector m_targetPos;
 	FVector m_targetLookPos;
 
-	float m_moveTime;
 	float m_tick;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainSceneCamera")
+		float moveTime;
 };

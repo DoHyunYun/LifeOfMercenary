@@ -4,7 +4,7 @@
 #include "Math/UnrealMathVectorCommon.h"
 #include "Kismet/KismetMathLibrary.h"
 
-AMainSceneCamera::AMainSceneCamera()
+AMainSceneCamera::AMainSceneCamera() : moveTime(1.f), m_tick(0.f)
 {
 	bAllowTickBeforeBeginPlay = true;
 
@@ -14,9 +14,6 @@ AMainSceneCamera::AMainSceneCamera()
 	m_pastLookPos = FVector::ZeroVector;
 	m_targetPos = FVector::ZeroVector;
 	m_targetLookPos = FVector::ZeroVector;
-
-	m_moveTime = 2.0f;
-	m_tick = 0.0f;
 }
 
 void AMainSceneCamera::BeginPlay()
@@ -71,13 +68,13 @@ void AMainSceneCamera::CameraMoveBegin()
 
 void AMainSceneCamera::MoveFunc(float _deltaSeconds)
 {
-	m_tick += (_deltaSeconds / m_moveTime);
+	m_tick += (_deltaSeconds / moveTime);
 
-	SetActorLocation(FMath::Lerp(m_pastPos, m_targetPos, m_tick));
+	SetActorLocation(UKismetMathLibrary::VEase(m_pastPos, m_targetPos, m_tick, EEasingFunc::EaseOut));
 	SetActorRotation(UKismetMathLibrary::REase(
 		FRotationMatrix::MakeFromX((m_pastLookPos - m_pastPos)).Rotator(),
 		FRotationMatrix::MakeFromX((m_targetLookPos - m_targetPos)).Rotator(),
-		m_tick, true, EEasingFunc::Linear));
+		m_tick, true, EEasingFunc::EaseOut));
 
 	if (m_tick >= 1.0f) {
 		SetActorTickEnabled(false);//Active Tick
