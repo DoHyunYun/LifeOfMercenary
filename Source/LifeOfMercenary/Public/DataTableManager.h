@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "Functions/LoMFunction.h"
+#include "Functions/LoMFunctions.h"
 #include "DataTableManager.generated.h"
 
 /**

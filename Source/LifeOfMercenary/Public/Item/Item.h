@@ -8,7 +8,7 @@ UENUM(BlueprintType)
 enum class EItemType : uint8
 {
 	ARMOR		UMETA(DisplayName = "ARMOR"),
-	WEAPON		UMETA(DisplayName = "WEAPON"),
+	WEAPON		UMETA(DisplayName = "WEAPON"),	
 };
 
 class UArmor;
@@ -17,7 +17,7 @@ class UEquipment;
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, BlueprintType)
 class LIFEOFMERCENARY_API UItem : public UObject
 {
 	GENERATED_BODY()
@@ -25,7 +25,7 @@ public:
 	UItem();
 
 	UFUNCTION(BlueprintCallable, Category = "Item")
-		UTexture2D* GetItemTexture2D();
+		UTexture2D* GetItemTexture2D(FString _path);
 	UFUNCTION(BlueprintCallable, Category = "Item")
 		FString GetName() { return m_name; }
 	UFUNCTION(BlueprintCallable, Category = "Item")
