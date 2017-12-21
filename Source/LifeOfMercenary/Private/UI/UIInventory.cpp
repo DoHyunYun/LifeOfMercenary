@@ -39,3 +39,16 @@ bool UUIInventory::AddEmptyInventorySlot(UUniformGridPanel* _panel, int32 _index
 
 	return true;
 }
+
+void UUIInventory::InventorySortNotEmpty(UUniformGridPanel* _pPanel)
+{
+	for (int i = 0; i < _pPanel->GetChildrenCount(); ++i) {
+		//추가된 아이템 공간의 위치 구하기.
+		int32 row = i / inventoryWidthSize;
+		int32 column = i % inventoryWidthSize;
+
+		UUniformGridSlot* pSizeboxGridSlot = UWidgetLayoutLibrary::SlotAsUniformGridSlot(_pPanel->GetChildAt(i));
+		pSizeboxGridSlot->SetRow(row);
+		pSizeboxGridSlot->SetColumn(column);
+	}
+}

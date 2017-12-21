@@ -7,7 +7,7 @@
 #include "LoMCamera.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCameraMoveEnter);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FCameraMoveExit);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCameraMoveExit, bool, _begin);
 
 /**
  * 

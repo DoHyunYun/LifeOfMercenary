@@ -16,6 +16,8 @@ class LIFEOFMERCENARY_API AHUDManager : public AHUD
 	GENERATED_BODY()
 
 public:
+	AHUDManager();
+
 	//UI 추가.
 	UFUNCTION(BlueprintCallable, Category = "MainSceneHUD")
 		bool AddUI(UUserWidget* _widget, FString _uiName);
@@ -32,12 +34,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MainSceneHUD")
 		UUserWidget* FindUI(FString _uiName);
 
+public:
+	UPROPERTY(BlueprintReadWrite, Category = "MainSceneHUD")
+		bool bEnable;
+
 private:
 	//UI모음 창고. 이곳에 있는 UI만 사용 가능.
 	TMap<FString, UUserWidget*> uiAssortment;
 
 	//UI순서
 	//TArray<UUserWidget*> uiRecord;
-	
 	
 };

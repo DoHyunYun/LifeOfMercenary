@@ -32,5 +32,5 @@ public:
 		FVector targetView;
 
 	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
-		virtual void InputTouchBegin(ETouchIndex::Type _type, UPrimitiveComponent* _primityive);
+		virtual void InputTouchEnd(ETouchIndex::Type _type, UPrimitiveComponent* _primityive);
 };

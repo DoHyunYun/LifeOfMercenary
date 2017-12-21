@@ -18,8 +18,8 @@ void UPlayerStatusComponent::BeginPlay()
 void UPlayerStatusComponent::UpdateStatus()
 {
 	m_healthPower = m_endurance * 100.f;
-	m_defensivePower = 0;	//방어력
-	m_attackPower = m_strength;	//공격력
+	m_defensivePower = equipment->GetTotalDefensivePower();	//방어력
+	m_attackPower = m_strength + equipment->GetTotalWeaponPower();	//공격력
 	m_staminaPower = m_endurance * 9.f;	//기력
 	m_resistancePower = (m_endurance*0.01f) + (m_mentalStrength*0.01f);//저항력
 	m_healthRecuperation = m_healthPower*0.01f;	//회복력

@@ -12,8 +12,7 @@ UUIInventorySlot::UUIInventorySlot(const FObjectInitializer& _objectInitializer)
 void UUIInventorySlot::NativeConstruct()
 {
 	Super::NativeConstruct();
-	textureBackground = LoadObject<UTexture2D>
-		(nullptr, TEXT("Texture2D'/Game/Resources/UI/Textures/T_NotSlotChoice.T_NotSlotChoice'"));
+	textureBackground = textureBeforeBackground;
 
 	SetItem(item);
 }
@@ -22,8 +21,7 @@ FReply UUIInventorySlot::NativeOnMouseButtonUp(const FGeometry& _inGeometry, con
 {
 	bChoice = true;
 
-	textureBackground = LoadObject<UTexture2D>
-		(nullptr, TEXT("Texture2D'/Game/Resources/UI/Textures/T_SlotChoice.T_SlotChoice'"));
+	textureBackground = textureAfterTouchBackground;
 
 	OnTouchSlot.Broadcast(this);
 	return FReply::Handled();
@@ -31,18 +29,19 @@ FReply UUIInventorySlot::NativeOnMouseButtonUp(const FGeometry& _inGeometry, con
 
 void UUIInventorySlot::SetItem(UItem* _item)
 {
-	if (nullptr != _item) {
-		item = _item;
+	item = _item;
+	if (nullptr != item) {
 		textureItem = item->GetItemTexture2D("/Game/Resources/Item/Textures/");
 	}
 	else {
-		UE_LOG(LogClass, Warning, TEXT("UUIInventorySlot::SetItem - None Item!!"));
+		textureItem = textureBeforeBackground;
 	}
 }
 
 void UUIInventorySlot::UnableSlot()
 {
 	bChoice = false;
-	textureBackground = LoadObject<UTexture2D>
-		(nullptr, TEXT("Texture2D'/Game/Resources/UI/Textures/T_NotSlotChoice.T_NotSlotChoice'"));
+	textureBackground = textureBeforeBackground;
+		/*LoadObject<UTexture2D>
+		(nullptr, TEXT("Texture2D'/Game/Resources/UI/Textures/T_NotSlotChoice.T_NotSlotChoice'"));*/
 }

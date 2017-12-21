@@ -2,6 +2,11 @@
 
 #include "HUDManager.h"
 
+AHUDManager::AHUDManager() : bEnable(true)
+{
+
+}
+
 bool AHUDManager::AddUI(UUserWidget* _widget, FString _uiName)
 {
 	if (_widget == nullptr) return false;
@@ -13,7 +18,11 @@ bool AHUDManager::AddUI(UUserWidget* _widget, FString _uiName)
 
 bool AHUDManager::DrawUI(FString _uiName)
 {
-	if (*uiAssortment.Find(_uiName) == nullptr) return false;
+	if (uiAssortment.Find(_uiName) == nullptr) return false;
+
+	if (false == bEnable)	return false;
+
+	bEnable = false;
 
 	(*uiAssortment.Find(_uiName))->SetVisibility(ESlateVisibility::Visible);
 	return true;
@@ -21,7 +30,9 @@ bool AHUDManager::DrawUI(FString _uiName)
 
 bool AHUDManager::EraseUI(FString _uiName)
 {
-	if (*uiAssortment.Find(_uiName) == nullptr) return false;
+	if (uiAssortment.Find(_uiName) == nullptr) return false;
+
+	bEnable = true;
 
 	(*uiAssortment.Find(_uiName))->SetVisibility(ESlateVisibility::Hidden);
 	return true;

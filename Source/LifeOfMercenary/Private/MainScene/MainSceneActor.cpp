@@ -17,7 +17,7 @@ AMainSceneActor::AMainSceneActor() : targetLocation(0,0,0), targetView(0,0,0)
 void AMainSceneActor::BeginPlay()
 {
 	Super::BeginPlay();
-	boxCollision->OnInputTouchBegin.AddDynamic(this, &AMainSceneActor::InputTouchBegin);
+	boxCollision->OnInputTouchEnd.AddDynamic(this, &AMainSceneActor::InputTouchEnd);
 }
 
 // Called every frame
@@ -27,7 +27,7 @@ void AMainSceneActor::Tick(float _deltaTime)
 
 }
 
-void AMainSceneActor::InputTouchBegin(ETouchIndex::Type _type, UPrimitiveComponent* _primityive)
+void AMainSceneActor::InputTouchEnd(ETouchIndex::Type _type, UPrimitiveComponent* _primityive)
 {
 
 }

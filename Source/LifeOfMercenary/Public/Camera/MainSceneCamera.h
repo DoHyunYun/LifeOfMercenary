@@ -23,16 +23,21 @@ public:
 		bool CameraMoveTo(FVector _gotoPos, FVector _lookPos);
 
 	UFUNCTION(BlueprintCallable, Category = "MainSceneCamera")
-		void CameraMoveBegin();
+		bool CameraMoveBegin();
+
+	UFUNCTION(BlueprintCallable, Category = "MainSceneCamera")
+		bool GetIsBegin() { return m_bBegin; }
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	void MoveFunc(float _deltaSeconds);
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainSceneCamera")
+		float moveTime;
 
 private:
-	
 	FVector m_beginPos;
 	FVector m_beginLookPos;
 
@@ -42,9 +47,8 @@ private:
 	FVector m_targetPos;
 	FVector m_targetLookPos;
 
+	bool m_bBegin;
+
 	float m_tick;
 
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MainSceneCamera")
-		float moveTime;
 };

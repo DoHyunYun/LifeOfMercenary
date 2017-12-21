@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/StatusComponent.h"
+#include "Components/EquipmentComponent.h"
 #include "PlayerStatusComponent.generated.h"
 
 /**
@@ -32,6 +33,10 @@ public:
 		float GetFame() { return m_fame; };
 	UFUNCTION(BlueprintCallable, Category = "PlayerStatusComponent")
 		float GetMaxWeight() { return m_maxWeight; };
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UMGInventory)
+		UEquipmentComponent* equipment;
 
 protected:
 	// Called when the game starts

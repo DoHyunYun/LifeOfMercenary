@@ -30,6 +30,10 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "UIInventory")
 		bool AddEmptyInventorySlot(UUniformGridPanel* _panel, int32 _index = 1);
 
+	//인벤토리의 아이템들을 빈 공간이 없도록 정렬시켜준다
+	UFUNCTION(BlueprintCallable, Category = "UIInventory")
+		void InventorySortNotEmpty(UUniformGridPanel* _pPanel);
+
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "UIInventory")
 		UUIInventorySlot* choiceSlot;

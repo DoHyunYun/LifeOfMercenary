@@ -3,9 +3,9 @@
 #include "LoMCharacter.h"
 
 
-ALoMCharacter::ALoMCharacter() : Inventory(nullptr)
+ALoMCharacter::ALoMCharacter() : inventory(nullptr)
 {
-	Inventory = CreateDefaultSubobject<UInventoryComponent>(TEXT("Inventory"));
+	inventory = CreateDefaultSubobject<UInventoryComponent>(TEXT("inventory"));
 }
 
 void ALoMCharacter::BeginPlay()

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Components/InventoryComponent.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "LoMCharacter.generated.h"
 
 UCLASS()
@@ -24,5 +25,5 @@ protected:
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "LoMCharacter")
-		UInventoryComponent* Inventory;
+		UInventoryComponent* inventory;
 };

@@ -4,10 +4,8 @@
 #include "Math/UnrealMathVectorCommon.h"
 #include "Kismet/KismetMathLibrary.h"
 
-AMainSceneCamera::AMainSceneCamera() : moveTime(1.f), m_tick(0.f)
+AMainSceneCamera::AMainSceneCamera() : moveTime(1.f), m_tick(0.f), m_bBegin(true)
 {
-	bAllowTickBeforeBeginPlay = true;
-
 	m_beginPos = FVector::ZeroVector;
 	m_beginLookPos = FVector::ZeroVector;
 	m_pastPos = FVector::ZeroVector;
@@ -36,8 +34,6 @@ bool AMainSceneCamera::CameraMoveTo(FVector _gotoPos, FVector _lookPos)
 {
 	if (IsActorTickEnabled()) return false;
 
-	cameraMoveEnter.Broadcast();
-
 	m_pastPos = GetActorLocation();
 	m_pastLookPos = GetActorLocation() + (GetActorForwardVector() * 10);
 	m_targetPos = _gotoPos;
@@ -46,15 +42,16 @@ bool AMainSceneCamera::CameraMoveTo(FVector _gotoPos, FVector _lookPos)
 	m_tick = 0.0f;
 
 	SetActorTickEnabled(true); //Active Tick
+	m_bBegin = false;
+
+	cameraMoveEnter.Broadcast();
 
 	return true;
 }
 
-void AMainSceneCamera::CameraMoveBegin()
+bool AMainSceneCamera::CameraMoveBegin()
 {
-	if (IsActorTickEnabled()) return;
-
-	cameraMoveEnter.Broadcast();
+	if (IsActorTickEnabled()) return false;
 
 	m_pastPos = GetActorLocation();
 	m_pastLookPos = GetActorLocation() + (GetActorForwardVector() * 10);
@@ -64,6 +61,11 @@ void AMainSceneCamera::CameraMoveBegin()
 	m_tick = 0.0f;
 
 	SetActorTickEnabled(true); //Active Tick
+	m_bBegin = true;
+
+	cameraMoveEnter.Broadcast();
+
+	return true;
 }
 
 void AMainSceneCamera::MoveFunc(float _deltaSeconds)
@@ -78,6 +80,6 @@ void AMainSceneCamera::MoveFunc(float _deltaSeconds)
 
 	if (m_tick >= 1.0f) {
 		SetActorTickEnabled(false);//Active Tick
-		cameraMoveExit.Broadcast();
+		cameraMoveExit.Broadcast(m_bBegin);
 	}
 }

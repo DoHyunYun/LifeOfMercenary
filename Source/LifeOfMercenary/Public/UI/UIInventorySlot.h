@@ -34,7 +34,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "UIInventorySlot")
 		UTexture2D* textureBackground;
 
-	UPROPERTY(BlueprintReadWrite, Category = "UIInventorySlot")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIInventorySlot")
+		UTexture2D* textureBeforeBackground;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIInventorySlot")
+		UTexture2D* textureAfterTouchBackground;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UIInventorySlot")
 		UTexture2D* textureItem;
 
 	UPROPERTY(BlueprintReadWrite, Category = "UIInventorySlot")
