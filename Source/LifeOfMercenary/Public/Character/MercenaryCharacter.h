@@ -9,6 +9,7 @@
 #include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Item/Weapon.h"
+#include "LifeOfMercenary/Public/Quest/QuestManager.h"
 #include "MercenaryCharacter.generated.h"
 
 /**
@@ -57,4 +58,16 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
 		UStaticMeshComponent* leftHand;
+
+	//³¯Â¥
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+		int32 date;
+	
+	//--------
+	//Äù½ºÆ®
+	//--------
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+		UQuestManager* questManager;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+		int32 currentQuest;
 };

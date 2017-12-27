@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "EquipmentComponent.h"
 //#include "Functions/LoMFunctions.h"
@@ -26,7 +26,7 @@ void UEquipmentComponent::UpdateEquipmentDefensivePower()
 
 void UEquipmentComponent::SetEquipItem(UItem* _item, EEquipmentPartsType _partsType)
 {
-	//Àü ¾ÆÀÌÅÛ Á¤º¸ °è»ê
+	//ì „ ì•„ì´í…œ ì •ë³´ ê³„ì‚°
 	switch (_item->GetItemType()) {
 	case EItemType::ARMOR:
 		if (m_parts[(int32)_partsType] != nullptr)
@@ -38,7 +38,7 @@ void UEquipmentComponent::SetEquipItem(UItem* _item, EEquipmentPartsType _partsT
 
 	m_parts[(int32)_partsType] = _item;
 
-	//Çö ¾ÆÀÌÅÛ Á¤º¸ °è»ê
+	//í˜„ ì•„ì´í…œ ì •ë³´ ê³„ì‚°
 	switch (_item->GetItemType()) {
 	case EItemType::ARMOR:
 		m_totalDefensivePower += Cast<UArmor>(m_parts[(int32)_partsType])->GetDefensivePower();

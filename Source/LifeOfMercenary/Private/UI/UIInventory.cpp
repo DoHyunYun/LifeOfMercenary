@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UIInventory.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
@@ -16,22 +16,22 @@ void UUIInventory::NativeConstruct()
 
 bool UUIInventory::AddEmptyInventorySlot(UUniformGridPanel* _panel, int32 _index/* = 1*/)
 {
-	//°¡·ÎÅ©±â°¡ Á¤ÇØÁ® ÀÖÁö ¾Ê´Ù¸é ¸®ÅÏ.
+	//ê°€ë¡œí¬ê¸°ê°€ ì •í•´ì ¸ ìˆì§€ ì•Šë‹¤ë©´ ë¦¬í„´.
 	if (inventoryWidthSize == 0) {
 		UE_LOG(LogClass, Warning, TEXT("UUMGInventory::AddEmptyInventorySlot - None 'InventoryWidthSize'"));
 		return false;
 	}
 
 	for (int i = 0; i < _index; ++i) {
-		//¾ÆÀÌÅÛ °ø°£(Sizebox) »ı¼º ¹× Ãß°¡.
+		//ì•„ì´í…œ ê³µê°„(Sizebox) ìƒì„± ë° ì¶”ê°€.
 		USizeBox* pTempSizeBox = NewObject<USizeBox>(USizeBox::StaticClass());
 		_panel->AddChild(pTempSizeBox);
 
-		//Ãß°¡µÈ ¾ÆÀÌÅÛ °ø°£ÀÇ À§Ä¡ ±¸ÇÏ±â.
+		//ì¶”ê°€ëœ ì•„ì´í…œ ê³µê°„ì˜ ìœ„ì¹˜ êµ¬í•˜ê¸°.
 		int32 row = (_panel->GetChildrenCount() - 1) / inventoryWidthSize;
 		int32 column = (_panel->GetChildrenCount() - 1) % inventoryWidthSize;
 
-		//¾ÆÀÌÅÛ °ø°£ÀÇ À§Ä¡ ¼³Á¤.
+		//ì•„ì´í…œ ê³µê°„ì˜ ìœ„ì¹˜ ì„¤ì •.
 		UUniformGridSlot* pSizeboxGridSlot = UWidgetLayoutLibrary::SlotAsUniformGridSlot(pTempSizeBox);
 		pSizeboxGridSlot->SetRow(row);
 		pSizeboxGridSlot->SetColumn(column);
@@ -43,7 +43,7 @@ bool UUIInventory::AddEmptyInventorySlot(UUniformGridPanel* _panel, int32 _index
 void UUIInventory::InventorySortNotEmpty(UUniformGridPanel* _pPanel)
 {
 	for (int i = 0; i < _pPanel->GetChildrenCount(); ++i) {
-		//Ãß°¡µÈ ¾ÆÀÌÅÛ °ø°£ÀÇ À§Ä¡ ±¸ÇÏ±â.
+		//ì¶”ê°€ëœ ì•„ì´í…œ ê³µê°„ì˜ ìœ„ì¹˜ êµ¬í•˜ê¸°.
 		int32 row = i / inventoryWidthSize;
 		int32 column = i % inventoryWidthSize;
 

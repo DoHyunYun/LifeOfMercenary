@@ -81,5 +81,8 @@ void AMainSceneCamera::MoveFunc(float _deltaSeconds)
 	if (m_tick >= 1.0f) {
 		SetActorTickEnabled(false);//Active Tick
 		cameraMoveExit.Broadcast(m_bBegin);
+		if (m_bBegin) {
+			cameraMoveExit.Clear();
+		}
 	}
 }

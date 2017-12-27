@@ -1,6 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MercenaryCharacter.h"
+#include "LifeOfMercenary/Public/Functions/Calendar.h"
 
 AMercenaryCharacter::AMercenaryCharacter() : equipment(nullptr), playerStatus(nullptr)
 {
@@ -36,10 +37,16 @@ void AMercenaryCharacter::BeginPlay()
 	Super::BeginPlay();
 
 
-	//Àåºñ ¾ÆÀÌÅÛ ÀåÂø ½Ã È£Ãâ
+	//ìž¥ë¹„ ì•„ì´í…œ ìž¥ì°© ì‹œ í˜¸ì¶œ
 	equipment->OnEquipItem.AddDynamic(this, &AMercenaryCharacter::OnEquipItem);
-	//Àåºñ ¾ÆÀÌÅÛ ÇØÁ¦ ½Ã È£Ãâ
+	//ìž¥ë¹„ ì•„ì´í…œ í•´ì œ ì‹œ í˜¸ì¶œ
 	equipment->OnDisarmItem.AddDynamic(this, &AMercenaryCharacter::OnDisarmItem);
+
+	//ë‚ ì§œ ì„¸íŒ…
+	date = UCalendar::ConvertFStoi("11015");
+	//í€˜ìŠ¤íŠ¸ ì„¸íŒ…
+	questManager = NewObject<UQuestManager>();
+	currentQuest = INDEX_NONE;
 }
 
 void AMercenaryCharacter::OnEquipItem_Implementation(EEquipmentPartsType _type)

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "PlayerStatusComponent.h"
 
@@ -18,12 +18,12 @@ void UPlayerStatusComponent::BeginPlay()
 void UPlayerStatusComponent::UpdateStatus()
 {
 	m_healthPower = m_endurance * 100.f;
-	m_defensivePower = equipment->GetTotalDefensivePower();	//¹æ¾î·Â
-	m_attackPower = m_strength + equipment->GetTotalWeaponPower();	//°ø°İ·Â
-	m_staminaPower = m_endurance * 9.f;	//±â·Â
-	m_resistancePower = (m_endurance*0.01f) + (m_mentalStrength*0.01f);//ÀúÇ×·Â
-	m_healthRecuperation = m_healthPower*0.01f;	//È¸º¹·Â
-	m_attackSpeed = 1.f;	//°ø°İ¼Óµµ
-	m_moveSpeed = 1.f;		//ÀÌµ¿¼Óµµ
-	m_staminaRecuperation = m_endurance + (m_mentalStrength*0.1f);//±â·Â È¸º¹¼Óµµ
+	m_defensivePower = equipment->GetTotalDefensivePower();	//ë°©ì–´ë ¥
+	m_attackPower = m_strength + equipment->GetTotalWeaponPower();	//ê³µê²©ë ¥
+	m_staminaPower = m_endurance * 9.f;	//ê¸°ë ¥
+	m_resistancePower = (m_endurance*0.01f) + (m_mentalStrength*0.01f);//ì €í•­ë ¥
+	m_healthRecuperation = m_healthPower*0.01f;	//íšŒë³µë ¥
+	m_attackSpeed = 1.f;	//ê³µê²©ì†ë„
+	m_moveSpeed = 1.f;		//ì´ë™ì†ë„
+	m_staminaRecuperation = m_endurance + (m_mentalStrength*0.1f);//ê¸°ë ¥ íšŒë³µì†ë„
 }

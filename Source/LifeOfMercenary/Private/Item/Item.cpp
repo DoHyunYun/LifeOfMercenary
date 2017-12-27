@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Item.h"
 #include "Item/Armor.h"
@@ -14,7 +14,7 @@ UItem::UItem() : m_name("NONE"), m_imageCode("NONE"), m_weight(0.f), m_meshCode(
 
 
 /*
-_path : ÆÄÀÏÀÌ ÀÖ´Â Æú´õ °æ·Î.
+_path : íŒŒì¼ì´ ìˆëŠ” í´ë” ê²½ë¡œ.
 */
 UTexture2D* UItem::GetItemTexture2D(FString _path)
 {
