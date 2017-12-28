@@ -21,7 +21,7 @@ int32 UCalendar::GetDay(int32 _Date)
 int32 UCalendar::ConvertFStoi(FString _Date)
 {
 	//예외처리
-	if (FCString::Atoi(*_Date) > (MaxYear * 10000) + (MaxMonth * 100) + MaxDay || FCString::Atoi(*_Date) <= 10101) 0;
+	if (FCString::Atoi(*_Date) > (MaxYear * 10000) + (MaxMonth * 100) + MaxDay || FCString::Atoi(*_Date) <= 10101) return 0;
 
 	int day = FCString::Atoi(*(_Date.Right(2)));
 	if (day > MaxDay || day < 0) return 0; //예외처리
