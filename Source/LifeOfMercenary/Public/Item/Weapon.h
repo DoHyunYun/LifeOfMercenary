@@ -56,6 +56,7 @@ public:
 	UWeapon();
 
 	void SetWeaponData(const FWeaponEquipmentData& _weaponData);
+	FWeaponEquipmentData GetWeaponData();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		float GetAttackPower() { return m_attackPower; }

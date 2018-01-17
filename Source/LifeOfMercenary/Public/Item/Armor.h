@@ -46,6 +46,7 @@ public:
 	UArmor();
 
 	void SetArmorData(const FArmorEquipmentData& _amorData);
+	FArmorEquipmentData GetArmorData();
 
 	UFUNCTION(BlueprintCallable, Category = "Armor")
 		float GetDefensivePower() { return m_defensivePower; }

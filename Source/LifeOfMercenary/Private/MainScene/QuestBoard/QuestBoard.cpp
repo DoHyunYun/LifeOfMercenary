@@ -39,23 +39,20 @@ void AQuestBoard::BeginPlay()
 
 	//Delegate 할당
 	ActiveQuestBoard.AddDynamic(this, &AQuestBoard::ActiveBoard);
-
-	requestDataArray = GetQuest();
 	boxCollision->OnInputTouchEnd.AddDynamic(this, &AQuestBoard::TouchEnd);
 
-	//
-	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C");
+	requestDataArray = GetQuest();
+	//SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C");
 
-	AMercenaryCharacter* tempPlayerCharacter = Cast<AMercenaryCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
-
-	tempPlayerCharacter->questManager->changedQuestList.AddDynamic(this, &AQuestBoard::RefreshPaper);
+	//AMercenaryCharacter* tempPlayerCharacter = Cast<AMercenaryCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	//tempPlayerCharacter->questManager->changedQuestList.AddDynamic(this, &AQuestBoard::RefreshPaper);
 }
 
 void AQuestBoard::RefreshPaper()
 {
 	for (int i = papers.Num(); i >= 1; --i) {
 		AActor* temp = papers.Pop();
-		temp->K2_DestroyActor();
+		temp->Destroy();
 	}
 
 	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C");
@@ -75,12 +72,11 @@ TArray<FQuestData> AQuestBoard::GetQuest()
 	//캐릭터 얻어오기
 	AMercenaryCharacter* tempPlayerCharacter = Cast<AMercenaryCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-	UQuestManager* questManager = tempPlayerCharacter->questManager;
-	TArray<int32> questArrayInt32 = questManager->GetQuestByDate(tempPlayerCharacter->date, 0, 7);
+	TArray<int32> questArrayInt32 = tempPlayerCharacter->questManager->GetQuestByDate(tempPlayerCharacter->date, 0, 7);
 
 	for (int i = 0; i < questArrayInt32.Num(); i++)
 	{
-		returnQuestArray.Add(questManager->GetQuestData(questArrayInt32[i] - 1));
+		//returnQuestArray.Add(tempPlayerCharacter->questManager->GetQuestData(questArrayInt32[i] - 1));
 	}
 
 	return returnQuestArray;

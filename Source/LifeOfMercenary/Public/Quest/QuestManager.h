@@ -114,6 +114,8 @@ public:
 	UPROPERTY(BlueprintCallable, Category = "QuestManager")
 		FChangeQuestList changedQuestList;
 
+	virtual class UWorld* GetWorld() const override;
+
 private:
 	//Äù½ºÆ® °¹¼ö ¼¼ÆÃ
 	void SetQuestNum();

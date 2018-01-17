@@ -29,5 +29,5 @@ void AMainSceneActor::Tick(float _deltaTime)
 
 void AMainSceneActor::InputTouchEnd(ETouchIndex::Type _type, UPrimitiveComponent* _primityive)
 {
-	UE_LOG(LogTemp, Log, TEXT("testhihihihi"));
+	
 }

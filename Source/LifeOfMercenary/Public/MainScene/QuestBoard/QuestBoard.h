@@ -46,6 +46,8 @@ public:
 	UPROPERTY(BlueprintCallable, BlueprintReadWrite, Category = "Board")
 		FActiveQuestBoardDelegate ActiveQuestBoard;
 
+	UPROPERTY(BlueprintReadWrite, Category = "InventoryComponent")
+		TArray<AQuestPaper*> papers;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Board")
@@ -65,8 +67,6 @@ private:
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		TArray<FQuestData> GetQuest();
 	
-	TArray<AQuestPaper*> papers;
-
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		void TouchEnd(ETouchIndex::Type _fingerIndex, UPrimitiveComponent* _touchedComponent);

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LifeOfMercenary/Public/MainScene/Gamble/GambleBase.h"
 #include "LifeOfMercenary/Public/Character/LoMCharacter.h"
@@ -16,7 +16,7 @@ void AGambleBase::BeginPlay()
 	m_playerGold = &Cast<ALoMCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn())->inventory->gold;
 	m_betMultiplyingFactor = 1.0f;
 
-	//À§Á¬ »ı¼º Ãß°¡
+	//ìœ„ì ¯ ìƒì„± ì¶”ê°€
 	FStringClassReference myWidgetClassRef(TEXT("/Game/UI/UI_Gamble.UI_Gamble_C"));
 	UUserWidget* myWidget = CreateWidget<UUserWidget>(GetWorld()->GetFirstPlayerController(), myWidgetClassRef.TryLoadClass<UUserWidget>());
 	myWidget->AddToViewport();
@@ -36,7 +36,7 @@ void AGambleBase::SetPlayerGold(int32 _variationGold)
 
 void AGambleBase::InputTouchEnd(ETouchIndex::Type _type, UPrimitiveComponent* _primityive)
 {
-	//Ä«¸Ş¶ó this¾×ÅÍ·Î ÀÌµ¿
+	//ì¹´ë©”ë¼ thisì•¡í„°ë¡œ ì´ë™
 	Cast<AMainSceneCamera>(GetWorld()->GetFirstPlayerController()->GetViewTarget())->CameraMoveTo(
 		UKismetMathLibrary::TransformLocation(GetActorTransform(), targetLocation),
 		UKismetMathLibrary::TransformLocation(GetActorTransform(), targetView)
@@ -47,9 +47,9 @@ void AGambleBase::InputTouchEnd(ETouchIndex::Type _type, UPrimitiveComponent* _p
 
 void AGambleBase::ActiveUI(bool _bBegin)
 {
-	//UIÈ°¼ºÈ­
+	//UIí™œì„±í™”
 	Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->DrawUI("UI_Gamble");
 
-	//µÚ·Î°¡±â ½Ã Delegate È£ÃâÀ» À§ÇØ UIÀÇ ºÎ¸ğ¾×ÅÍ·Î ÁöÁ¤
+	//ë’¤ë¡œê°€ê¸° ì‹œ Delegate í˜¸ì¶œì„ ìœ„í•´ UIì˜ ë¶€ëª¨ì•¡í„°ë¡œ ì§€ì •
 	Cast<UDefaultUI>(Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->FindUI("UI_Gamble"))->parentActor = this;
 }
