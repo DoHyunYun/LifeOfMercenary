@@ -43,6 +43,12 @@ void AMercenaryCharacter::PostInitProperties()
 
 	//데이터 불러오기.
 	LoadData();
+	
+	//날짜 세팅
+	date = UCalendar::ConvertFStoi("11015");
+
+	questManager = NewObject<UQuestManager>(this);
+	currentQuest = INDEX_NONE;
 }
 
 void AMercenaryCharacter::BeginPlay()
@@ -53,13 +59,6 @@ void AMercenaryCharacter::BeginPlay()
 	equipment->OnEquipItem.AddDynamic(this, &AMercenaryCharacter::OnEquipItem);
 	//장비 아이템 해제 시 호출
 	equipment->OnDisarmItem.AddDynamic(this, &AMercenaryCharacter::OnDisarmItem);
-
-	//날짜 세팅
-	date = UCalendar::ConvertFStoi("11015");
-
-	//퀘스트 세팅
-	questManager = NewObject<UQuestManager>(this);
-	currentQuest = INDEX_NONE;
 
 	for (int i = 0; i < (int)EEquipmentPartsType::MAX_PARTS; i++) {
 		OnEquipItem_Implementation((EEquipmentPartsType)i);

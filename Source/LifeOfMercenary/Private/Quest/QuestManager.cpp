@@ -10,26 +10,23 @@
 
 UQuestManager::UQuestManager()
 {
-	gameObjectLookupTable = ULoMFunctions::GetDataTableFromString(TEXT("DataTable'/Game/DataTables/DT_RQ.DT_RQ'"));;
+	ConstructorHelpers::FObjectFinder<UDataTable> ExcelTable_BP(TEXT("DataTable'/Game/DataTables/DT_RQ.DT_RQ'"));
+	gameObjectLookupTable = ExcelTable_BP.Object;
 
 	currentQuest = INDEX_NONE;
+
 	SetQuestNum();
-}
-
-void UQuestManager::PostLoad()
-{
-	Super::PostLoad();
-
-	currentQuest = INDEX_NONE;
 }
 
 void UQuestManager::SetQuestNum()
 {
+	totalQuestNum = 0;
+
 	for (int i = 0; true; i++)
 	{
-		FQuestData tempQuestData = *gameObjectLookupTable->FindRow<FQuestData>(FName(*(FString("RQ_") + FString::FromInt(i))), FString(""));
+		FQuestData* tempQuestData = gameObjectLookupTable->FindRow<FQuestData>(FName(*(FString("RQ_") + FString::FromInt(i))), FString(""));
 
-		if (tempQuestData.IsEnd)
+		if (tempQuestData->IsEnd)
 		{
 			totalQuestNum = i + 1;
 			break;
@@ -38,15 +35,13 @@ void UQuestManager::SetQuestNum()
 }
 
 TArray<int32> UQuestManager::GetQuestByDate(int32 _date, int32 _beforeDate, int32 _afterDate)
-{ 
+{
 	TArray<int32> returnCurrentQuestArray;
 
-	for (int i = 0; i < totalQuestNum; i++)
+	for (int32 i = 0; i < totalQuestNum; i++)
 	{
-		//FQuestData* tempQuestData = gameObjectLookupTable->FindRow<FQuestData>(*(FString("RQ_") + FString::FromInt(i)), FString(""));
-
-		FQuestData* tempQuestData = Cast<ULoMGameInstance>(GetWorld()->GetGameInstance())->
-			GetDataTableManager()->GetQuestDataTable()->FindRow<FQuestData>(*(FString("RQ_") + FString::FromInt(i)), FString(""));
+		FString tempName = FName(*(FString("RQ_") + FString::FromInt(i))).ToString();
+		FQuestData* tempQuestData = gameObjectLookupTable->FindRow<FQuestData>(FName(*(FString("RQ_") + FString::FromInt(i))), FString(""));
 
 		//break조건
 		//앞선 날짜
@@ -60,7 +55,7 @@ TArray<int32> UQuestManager::GetQuestByDate(int32 _date, int32 _beforeDate, int3
 		//반환변수에 추가.
 		returnCurrentQuestArray.Add(tempQuestData->Num);
 	}
-	 
+
 	return returnCurrentQuestArray;
 }
 
@@ -102,10 +97,10 @@ FReward UQuestManager::SuccesQuest()
 {
 	FReward returnReward;
 
-	FQuestData tempQuestData = *gameObjectLookupTable->FindRow<FQuestData>(FName(*(FString("RQ_") + FString::FromInt(currentQuest))), FString(""));
+	FQuestData* tempQuestData = gameObjectLookupTable->FindRow<FQuestData>(FName(*(FString("RQ_") + FString::FromInt(currentQuest))), FString(""));
 
-	returnReward.money = tempQuestData.Pay;
-	returnReward.fame = tempQuestData.Fame;
+	returnReward.money = tempQuestData->Pay;
+	returnReward.fame = tempQuestData->Fame;
 
 	return returnReward;
 }
@@ -168,11 +163,3 @@ TArray<int32> UQuestManager::GetComplateQuestArray()
 	return complateQuestArray;
 }
 
-
-UWorld* UQuestManager::GetWorld() const
-{
-	AMercenaryCharacter* CharacterInstance = Cast<AMercenaryCharacter>(GetOuter());
-
-	if (CharacterInstance) return CharacterInstance->GetWorld();
-	else return nullptr;
-}

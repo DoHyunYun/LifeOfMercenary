@@ -46,9 +46,6 @@ public:
 	UPROPERTY(BlueprintCallable, BlueprintReadWrite, Category = "Board")
 		FActiveQuestBoardDelegate ActiveQuestBoard;
 
-	UPROPERTY(BlueprintReadWrite, Category = "InventoryComponent")
-		TArray<AQuestPaper*> papers;
-
 public:
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		bool SetPaperObjectonBoard(FString _PaperClassPath);
@@ -66,6 +63,8 @@ private:
 	//RequestManager로부터 현재 퀘스트를 얻어옴.
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		TArray<FQuestData> GetQuest();
+
+	TArray<AQuestPaper*> papers;
 	
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Board")

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "MapCharacter.h"
 #include "MainScenePlayerController.generated.h"
 
 /**

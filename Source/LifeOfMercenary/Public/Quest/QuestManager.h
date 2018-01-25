@@ -15,6 +15,9 @@ struct FQuestData : public FTableRowBase
 	GENERATED_USTRUCT_BODY()
 
 public:
+	FQuestData() : Num(0), Title("NONE"), Client("NONE"), StartDate("NONE"), EndDate("NONE"),
+		Pay(0), Fame(0), Deposit(0), IsEnd(true), DetailStory("NONE") {}
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DT_RQ")
 		int32 Num;
 
@@ -69,11 +72,12 @@ public:
 	UQuestManager();
 	~UQuestManager() {};
 
-	virtual void PostLoad() override;
+	//퀘스트 목록이 담긴 데이터 테이블
+	UPROPERTY()
+		UDataTable* gameObjectLookupTable = nullptr;
 
 private:
-	//퀘스트 목록이 담긴 데이터 테이블
-	UDataTable* gameObjectLookupTable = nullptr;
+
 	//퀘스트 갯수
 	int32 totalQuestNum = 0;
 	//현재 퀘스트
@@ -113,8 +117,6 @@ public:
 	//퀘스트 리스트 변화시 호출되는 Delegate
 	UPROPERTY(BlueprintCallable, Category = "QuestManager")
 		FChangeQuestList changedQuestList;
-
-	virtual class UWorld* GetWorld() const override;
 
 private:
 	//퀘스트 갯수 세팅
