@@ -12,11 +12,12 @@ bSaveBlock(false), bCameraRotEnable(true), damageDirection(0.f, 0.f, 0.f), camer
 {
 	cameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("cameraSpringArm"));
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("camera"));
+	AttackCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("AttackCollisionBox"));
 
 	cameraSpringArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	camera->AttachToComponent(cameraSpringArm, FAttachmentTransformRules::KeepRelativeTransform);
 
-	//AttackCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
+	AttackCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("rightHand_socket"));
 
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 1000.0f, 0.0f); // ...at this rotation rate
