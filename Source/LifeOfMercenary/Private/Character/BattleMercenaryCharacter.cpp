@@ -8,13 +8,15 @@
 
 ABattleMercenaryCharacter::ABattleMercenaryCharacter() : m_baseTurnRate(45.f), m_baseLookUpRate(45.f),
 currentState(EMercenaryStateType::Idle), bActiveRoll(true), bFreeAction(true), bSaveRoll(false), bNextAttack(false),
-bSaveBlock(false)
+bSaveBlock(false), bCameraRotEnable(true), damageDirection(0.f, 0.f, 0.f), cameraRotSpeed(10.f)
 {
 	cameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("cameraSpringArm"));
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("camera"));
 
 	cameraSpringArm->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	camera->AttachToComponent(cameraSpringArm, FAttachmentTransformRules::KeepRelativeTransform);
+
+	//AttackCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
 
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 1000.0f, 0.0f); // ...at this rotation rate
@@ -40,14 +42,14 @@ void ABattleMercenaryCharacter::Tick(float DeltaTime)
 	switch (currentState) {
 	case EMercenaryStateType::Idle:
 		this->GetCharacterMovement()->MaxWalkSpeed = 600;
-		this->GetCharacterMovement()->bOrientRotationToMovement = true;
+		//this->GetCharacterMovement()->bOrientRotationToMovement = true;
 		break;
 	case EMercenaryStateType::Attack:
 		PlayAttack();
 		break;
 	case EMercenaryStateType::Block:
 		this->GetCharacterMovement()->MaxWalkSpeed = 150;
-		this->GetCharacterMovement()->bOrientRotationToMovement = false;
+		//this->GetCharacterMovement()->bOrientRotationToMovement = false;
 		break;
 	}
 }
@@ -57,19 +59,19 @@ void ABattleMercenaryCharacter::SetupPlayerInputComponent(class UInputComponent*
 	check(PlayerInputComponent);
 
 	PlayerInputComponent->BindAction("Roll", IE_Pressed, this, &ABattleMercenaryCharacter::Rolling);
-	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ABattleMercenaryCharacter::Attack);
-	//PlayerInputComponent->BindAction("AttackAttack", IE_Pressed, this, &ABattleMercenaryCharacter::AttackAttack);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &ABattleMercenaryCharacter::Attack); 
 	PlayerInputComponent->BindAction("Block", IE_Pressed, this, &ABattleMercenaryCharacter::Block);
 	PlayerInputComponent->BindAction("Block", IE_Released, this, &ABattleMercenaryCharacter::UnBlock);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ABattleMercenaryCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ABattleMercenaryCharacter::MoveRight);
 
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("TurnRate", this, &ABattleMercenaryCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &ABattleMercenaryCharacter::LookUpAtRate);
+	//PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	//PlayerInputComponent->BindAxis("TurnRate", this, &ABattleMercenaryCharacter::TurnAtRate);
+	//PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	//PlayerInputComponent->BindAxis("LookUpRate", this, &ABattleMercenaryCharacter::LookUpAtRate);
 }
+
 
 void ABattleMercenaryCharacter::MoveForward(float Value)
 {
@@ -77,6 +79,7 @@ void ABattleMercenaryCharacter::MoveForward(float Value)
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		Value = Value > 0 ? 1 : -1;
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
@@ -93,6 +96,7 @@ void ABattleMercenaryCharacter::MoveRight(float Value)
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		Value = Value > 0 ? 1 : -1;
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);

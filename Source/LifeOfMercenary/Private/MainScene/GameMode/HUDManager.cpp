@@ -24,7 +24,7 @@ bool AHUDManager::DrawUI(FString _uiName)
 
 	bEnable = false;
 
-	(*uiAssortment.Find(_uiName))->SetVisibility(ESlateVisibility::Visible);
+	(*uiAssortment.Find(_uiName))->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 	return true;
 }
 
