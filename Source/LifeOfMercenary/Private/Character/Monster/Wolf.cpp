@@ -4,13 +4,17 @@
 #include "Runtime/AIModule/Classes/AIController.h"
 AWolf::AWolf()
 {
+	AttackCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("AttackCollisionBox"));
+	BodyCollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BodyCollisionBox"));
 
+	AttackCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Socket_Teeth"));
+	BodyCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void AWolf::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//Cast<AAIController>(AIControllerClass)->
+
 }
 
 void AWolf::BeginPlay()

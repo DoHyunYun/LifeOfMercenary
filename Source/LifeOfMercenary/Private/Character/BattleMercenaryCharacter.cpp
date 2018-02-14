@@ -5,6 +5,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "Runtime/Engine/Classes/Animation/AnimMontage.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ABattleMercenaryCharacter::ABattleMercenaryCharacter() : m_baseTurnRate(45.f), m_baseLookUpRate(45.f),
 currentState(EMercenaryStateType::Idle), bActiveRoll(true), bFreeAction(true), bSaveRoll(false), bNextAttack(false),
@@ -80,7 +82,7 @@ void ABattleMercenaryCharacter::MoveForward(float Value)
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		Value = Value > 0 ? 1 : -1;
+		Value = Value > 0 ? 1 : -1; //중간 속도들을 없애기 위해사용
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
@@ -97,7 +99,7 @@ void ABattleMercenaryCharacter::MoveRight(float Value)
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-		Value = Value > 0 ? 1 : -1;
+		Value = Value > 0 ? 1 : -1; //중간 속도들을 없애기 위해사용
 
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
@@ -214,5 +216,32 @@ void ABattleMercenaryCharacter::EndRolling()
 
 	if (bSaveBlock) {
 		currentState = EMercenaryStateType::Block;
+	}
+}
+
+void ABattleMercenaryCharacter::AttackAutoTarget()
+{
+	FHitResult hitResult;
+	bool bObjectCheck = false;
+	FVector targetLocation;
+
+	bObjectCheck = UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(), this->GetActorLocation(), this->GetActorLocation(), 300,
+	{ EObjectTypeQuery::ObjectTypeQuery7 }, false, {}, EDrawDebugTrace::None, hitResult, true);
+
+	//자동 타겟 될 목표의 위치를 구한다.
+	if (true == bObjectCheck) {
+		targetLocation = hitResult.Actor->GetActorLocation();
+	}
+	else {
+		targetLocation = GetActorForwardVector() + GetActorLocation();
+	}
+
+	//플레이어를 타겟의 방향으로 회전시킨다.
+	if (true == this->bFreeAction && currentState== EMercenaryStateType::Idle) {
+		FVector rotDir = targetLocation - this->GetActorLocation();
+		rotDir.Normalize();
+		SetActorRotation(FRotator(0.f, rotDir.Rotation().Yaw,0.f));
+		
+		worldDir = rotDir;
 	}
 }

@@ -27,5 +27,5 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "LoMCharacter")
 		UInventoryComponent* inventory;
 	UPROPERTY(BlueprintReadWrite, Category = "LoMCharacter")
-		bool bAttackEnable;
+		bool bAttackEnable; //공격중인 상태라면 true
 };

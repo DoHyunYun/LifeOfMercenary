@@ -38,6 +38,8 @@ public:
 		void EndAttack();
 	UFUNCTION(BlueprintCallable, Category = "BattleMercenaryCharacter")
 		void EndRolling();
+	UFUNCTION(BlueprintCallable, Category = "BattleMercenaryCharacter")
+		void AttackAutoTarget();
 
 protected:
 	virtual void BeginPlay() override;
