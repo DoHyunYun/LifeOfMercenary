@@ -48,7 +48,7 @@ public:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Board")
-		bool SetPaperObjectonBoard(FString _PaperClassPath);
+		bool SetPaperObjectonBoard(FString _PaperClassPath, bool _paperActive);
 
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		void ActiveBoard();
@@ -70,5 +70,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		void TouchEnd(ETouchIndex::Type _fingerIndex, UPrimitiveComponent* _touchedComponent);
 	
+	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
+		virtual void BeforeActiveEvent();
+	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
+		virtual void ActiveEvent();
 };
 

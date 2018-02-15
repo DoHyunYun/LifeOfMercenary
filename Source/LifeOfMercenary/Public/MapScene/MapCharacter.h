@@ -47,7 +47,7 @@ public:
 
 	//Tick 중지.
 	void StopMove();
-	//Tick 시작. 이미 이동중이라면 return false
+	//Tick 시작. 이미 이동중이거나, 목적지에 도착한 상태라면, return false
 	bool StartMove();
 
 protected:
@@ -55,8 +55,10 @@ protected:
 	void Move();
 
 protected:
+	//1단계 길찾기. 바로 주변만 검색. 찾지 못하였을 경우 false반환
+	bool SingleFindRoute(AMapPoint* _targetPoint);
 	//A* 길찾기
-	void FindRoute(AMapPoint* _targetPoint);
+	bool FindRoute(AMapPoint* _targetPoint);
 
 public:
 	UPROPERTY(BlueprintReadOnly)

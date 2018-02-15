@@ -32,4 +32,9 @@ private:
 	
 	//∆«µ∑ πË¿≤
 	float m_betMultiplyingFactor;
+
+	UFUNCTION(BlueprintCallable, Category = "GambleBase")
+		virtual void BeforeActiveEvent();
+	UFUNCTION(BlueprintCallable, Category = "GambleBase")
+		virtual void ActiveEvent();
 };

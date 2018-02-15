@@ -5,6 +5,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Functions/LoMFunctions.h"
+#include "HUDManager.h"
 
 
 AMainSceneOwner::AMainSceneOwner() : Inventory(nullptr)
@@ -19,6 +20,7 @@ void AMainSceneOwner::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Mesh->SetVisibility(false, true);
 }
 
 
@@ -32,4 +34,18 @@ void AMainSceneOwner::InputTouchEnd(ETouchIndex::Type _type, UPrimitiveComponent
 				UKismetMathLibrary::TransformLocation(this->GetActorTransform(), targetView));
 		}
 	}
+}
+
+void AMainSceneOwner::BeforeActiveEvent()
+{
+	Super::BeforeActiveEvent();
+
+	Mesh->SetVisibility(true, true);
+
+	Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->DrawUI("Store");
+}
+
+void AMainSceneOwner::ActiveEvent()
+{
+	Super::ActiveEvent();
 }

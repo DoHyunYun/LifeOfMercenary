@@ -45,7 +45,7 @@ void AQuestBoard::BeginPlay()
 	boxCollision->OnInputTouchEnd.AddDynamic(this, &AQuestBoard::TouchEnd);
 
 	//
-	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C");
+	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C", false);
 
 	AMercenaryCharacter* tempPlayerCharacter = Cast<AMercenaryCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
@@ -59,7 +59,7 @@ void AQuestBoard::RefreshPaper()
 		temp->Destroy();
 	}
 
-	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C");
+	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C", true);
 }
 
 // Called every frame
@@ -88,7 +88,7 @@ TArray<FQuestData> AQuestBoard::GetQuest()
 	return returnQuestArray;
 }
 
-bool AQuestBoard::SetPaperObjectonBoard(FString _PaperClassPath)
+bool AQuestBoard::SetPaperObjectonBoard(FString _PaperClassPath, bool _paperActive)
 {
 	//Blueprint Class Load.
 	UClass* paperBlueprint = LoadObject<UClass>(nullptr, *_PaperClassPath);
@@ -113,6 +113,14 @@ bool AQuestBoard::SetPaperObjectonBoard(FString _PaperClassPath)
 
 		tempPaper->questData = requestDataArray[i];
 		papers.Add(tempPaper);
+	}
+
+	//Paper비활성화
+	if (!_paperActive) {
+		for (int i = 0; i < papers.Num(); i++) {
+			papers[i]->SetActorHiddenInGame(true);
+			papers[i]->boxCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
 	}
 
 	return true;
@@ -148,3 +156,22 @@ void AQuestBoard::ActiveUI(bool _bBegin)
 	//뒤로가기 시 Delegate 호출을 위해 UI의 부모액터로 지정
 	Cast<UDefaultUI>(Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->FindUI("UI_Board"))->parentActor = this;
 }
+
+void AQuestBoard::BeforeActiveEvent()
+{
+	Super::BeforeActiveEvent();
+
+	//Paper활성화
+	for (int i = 0; i < papers.Num(); i++) {
+		papers[i]->SetActorHiddenInGame(false);
+		papers[i]->boxCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	}
+
+	Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->DrawUI("UI_Board");
+}
+
+void AQuestBoard::ActiveEvent()
+{
+
+}
+

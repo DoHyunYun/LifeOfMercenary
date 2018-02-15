@@ -80,5 +80,4 @@ public:
 		UQuestManager* questManager;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
 		int32 currentQuest;
-
 };
