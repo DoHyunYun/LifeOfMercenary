@@ -20,7 +20,7 @@ bool AHUDManager::DrawUI(FString _uiName)
 {
 	if (uiAssortment.Find(_uiName) == nullptr) return false;
 
-	if (false == bEnable)	return false;
+	//if (false == bEnable)	return false;
 
 	bEnable = false;
 

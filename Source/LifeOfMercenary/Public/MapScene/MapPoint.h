@@ -38,12 +38,12 @@ public:
 		//연결된 Spline에 이 Point를 전달.
 		void SetArrayInSpline();
 
-#if WITH_EDITOR
+//#if WITH_EDITOR
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 		UStaticMesh* pointMesh;
 	UPROPERTY(EditDefaultsOnly)
-		bool bVisibleEditorOnly = true;
+		bool bVisibleEditorOnly;
 	UPROPERTY(EditDefaultsOnly)
-		float pointMeshRadius = 1.0f;
-#endif
+		float pointMeshRadius;
+//#endif
 };

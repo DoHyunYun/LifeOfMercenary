@@ -28,6 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "MainSceneCamera")
 		bool GetIsBegin() { return m_bBegin; }
 
+	UFUNCTION(BlueprintCallable, Category = "MainSceneCamera")
+		void TransformBegin();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -51,4 +54,6 @@ private:
 
 	float m_tick;
 
+
+	FTransform m_beginTransform;
 };

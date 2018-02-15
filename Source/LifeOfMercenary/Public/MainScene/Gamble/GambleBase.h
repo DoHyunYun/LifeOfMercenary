@@ -29,7 +29,12 @@ public:
 private:
 	//플레이어 소지금
 	int32* m_playerGold;
-	
+
 	//판돈 배율
 	float m_betMultiplyingFactor;
+
+	UFUNCTION(BlueprintCallable, Category = "GambleBase")
+		virtual void BeforeActiveEvent();
+	UFUNCTION(BlueprintCallable, Category = "GambleBase")
+		virtual void ActiveEvent();
 };

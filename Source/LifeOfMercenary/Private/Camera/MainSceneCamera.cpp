@@ -18,6 +18,8 @@ void AMainSceneCamera::BeginPlay()
 {
 	Super::BeginPlay();
 
+	m_beginTransform = GetActorTransform();
+
 	m_beginPos = GetActorLocation();
 	m_beginLookPos = GetActorLocation() + (GetActorForwardVector() * 10);
 	SetActorTickEnabled(false);//InActive Tick
@@ -85,4 +87,9 @@ void AMainSceneCamera::MoveFunc(float _deltaSeconds)
 			cameraMoveExit.Clear();
 		}
 	}
+}
+
+void AMainSceneCamera::TransformBegin()
+{
+	SetActorTransform(m_beginTransform);
 }

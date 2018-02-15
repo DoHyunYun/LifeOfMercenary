@@ -53,3 +53,17 @@ void AGambleBase::ActiveUI(bool _bBegin)
 	//뒤로가기 시 Delegate 호출을 위해 UI의 부모액터로 지정
 	Cast<UDefaultUI>(Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->FindUI("UI_Gamble"))->parentActor = this;
 }
+
+
+void AGambleBase::BeforeActiveEvent()
+{
+	Super::BeforeActiveEvent();
+
+	Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->DrawUI("UI_Gamble");
+}
+
+void AGambleBase::ActiveEvent()
+{
+	Super::ActiveEvent();
+}
+
