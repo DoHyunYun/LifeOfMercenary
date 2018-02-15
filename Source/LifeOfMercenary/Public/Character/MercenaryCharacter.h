@@ -10,6 +10,7 @@
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Item/Weapon.h"
 #include "LifeOfMercenary/Public/Quest/QuestManager.h"
+#include "SaveGame/PlayerSaveGame.h"
 #include "MercenaryCharacter.generated.h"
 
 /**
@@ -22,6 +23,12 @@ class LIFEOFMERCENARY_API AMercenaryCharacter : public ALoMCharacter
 public:
 	AMercenaryCharacter();
 
+	UFUNCTION(BlueprintCallable, Category = MainMercenary)
+		void SaveData();
+
+	UFUNCTION(BlueprintCallable, Category = MainMercenary)
+		void LoadData();
+
 	UFUNCTION(BlueprintNativeEvent, Category = MainMercenary)
 		void OnEquipItem(EEquipmentPartsType _type);
 
@@ -30,6 +37,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void PostInitProperties() override;
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
@@ -38,27 +46,29 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
 		UPlayerStatusComponent* playerStatus;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+	UPROPERTY(VisibleAnywhere, Category = "MercenaryCharacter")
 		USkeletalMeshComponent* body;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+	UPROPERTY(VisibleAnywhere, Category = "MercenaryCharacter")
 		USkeletalMeshComponent* hands;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+	UPROPERTY(VisibleAnywhere, Category = "MercenaryCharacter")
 		USkeletalMeshComponent* bottoms;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+	UPROPERTY(VisibleAnywhere, Category = "MercenaryCharacter")
 		USkeletalMeshComponent* feets;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+	UPROPERTY(VisibleAnywhere, Category = "MercenaryCharacter")
 		UStaticMeshComponent* helmet;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+	UPROPERTY(VisibleAnywhere, Category = "MercenaryCharacter")
 		UStaticMeshComponent* rightHand;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
+	UPROPERTY(VisibleAnywhere, Category = "MercenaryCharacter")
 		UStaticMeshComponent* leftHand;
 
+	UPROPERTY(BlueprintReadWrite, Category = "MercenaryCharacter")
+		UPlayerSaveGame* playerSaveGame;
 	//³¯Â¥
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
 		int32 date;
@@ -70,4 +80,5 @@ public:
 		UQuestManager* questManager;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "MercenaryCharacter")
 		int32 currentQuest;
+
 };

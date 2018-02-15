@@ -6,7 +6,7 @@
 UEquipmentComponent::UEquipmentComponent() : m_totalAttackPower(0.f), m_totalDefensivePower(0.f)
 {
 	for (int32 i = 0; i < (int32)EEquipmentPartsType::MAX_PARTS; i++) {
-		m_parts[i] = nullptr;
+		parts.Add(nullptr);
 	}
 }
 
@@ -16,55 +16,34 @@ void UEquipmentComponent::BeginPlay()
 	
 }
 
-void UEquipmentComponent::UpdateEquipmentDefensivePower()
-{
-	m_totalDefensivePower = 0;
-	for (int32 i = 0; i < (int32)EEquipmentPartsType::MAX_PARTS; i++) {
-		m_totalDefensivePower += Cast<UArmor>(m_parts[i])->GetDefensivePower();
-	}
-}
-
 void UEquipmentComponent::SetEquipItem(UItem* _item, EEquipmentPartsType _partsType)
 {
-	//전 아이템 정보 계산
-	switch (_item->GetItemType()) {
-	case EItemType::ARMOR:
-		if (m_parts[(int32)_partsType] != nullptr)
-			m_totalDefensivePower -= Cast<UArmor>(m_parts[(int32)_partsType])->GetDefensivePower();
-		break;
-	case EItemType::WEAPON:
-		break;
-	}
-
-	m_parts[(int32)_partsType] = _item;
-
-	//현 아이템 정보 계산
-	switch (_item->GetItemType()) {
-	case EItemType::ARMOR:
-		m_totalDefensivePower += Cast<UArmor>(m_parts[(int32)_partsType])->GetDefensivePower();
-		break;
-	case EItemType::WEAPON:
-		m_totalAttackPower = Cast<UWeapon>(m_parts[(int32)_partsType])->GetAttackPower();
-		break;
-	}
-
+	parts[(int32)_partsType] = _item;
+	UpdateEquipmentPower();
 	OnEquipItem.Broadcast(_partsType);
 }
 
 void UEquipmentComponent::Disarm(EEquipmentPartsType _partsType)
 {
-	if (m_parts[(int32)_partsType] != nullptr) {
-		switch (m_parts[(int32)_partsType]->GetItemType()) {
-		case EItemType::ARMOR:
-			m_totalDefensivePower -= Cast<UArmor>(m_parts[(int32)_partsType])->GetDefensivePower();
-			break;
-		case EItemType::WEAPON:
-			m_totalAttackPower = 0;
-			break;
+	parts[(int32)_partsType] = nullptr;
+	UpdateEquipmentPower();
+	OnDisarmItem.Broadcast(_partsType);
+}
+
+void UEquipmentComponent::UpdateEquipmentPower()
+{
+	m_totalDefensivePower = 0;
+	m_totalAttackPower = 0;
+	for (int32 i = 0; i < (int32)EEquipmentPartsType::MAX_PARTS; i++) {
+		if (parts[i] != nullptr) {
+			switch (parts[i]->GetItemType()) {
+			case EItemType::ARMOR:
+				m_totalDefensivePower += Cast<UArmor>(parts[i])->GetDefensivePower();
+				break;
+			case EItemType::WEAPON:
+				m_totalAttackPower += Cast<UWeapon>(parts[i])->GetAttackPower();
+				break;
+			}
 		}
 	}
-
-	m_parts[(int32)_partsType] = nullptr;
-
-	OnDisarmItem.Broadcast(_partsType);
 }

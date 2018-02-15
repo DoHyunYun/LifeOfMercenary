@@ -33,4 +33,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
 		virtual void InputTouchEnd(ETouchIndex::Type _type, UPrimitiveComponent* _primityive);
+
+	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
+		virtual void BeforeActiveEvent();
+	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
+		virtual void ActiveEvent();
+
+	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
+		virtual void UnActiveEvent();
 };

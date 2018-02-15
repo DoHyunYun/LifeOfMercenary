@@ -10,9 +10,11 @@ void AGambleExample::BeginPlay()
 	randNumber = 0;
 }
 
-void AGambleExample::SetNumber()
+int32 AGambleExample::SetNumber()
 {
 	randNumber = UKismetMathLibrary::RandomIntegerInRange(0, 1);
+
+	return randNumber;
 }
 
 void AGambleExample::GameFinish(int32 _num)

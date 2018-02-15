@@ -5,7 +5,7 @@
 
 
 // Sets default values for this component's properties
-UInventoryComponent::UInventoryComponent() : gold(0)
+UInventoryComponent::UInventoryComponent() : gold(2000)
 {
 
 }

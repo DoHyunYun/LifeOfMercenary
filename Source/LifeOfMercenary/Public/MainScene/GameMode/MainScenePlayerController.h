@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "MapCharacter.h"
 #include "MainScenePlayerController.generated.h"
 
 /**
@@ -14,5 +15,7 @@ class LIFEOFMERCENARY_API AMainScenePlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-
+public:
+	UPROPERTY(BlueprintReadWrite)
+		TArray<AMainSceneActor*> mainSceneActorArray;
 };

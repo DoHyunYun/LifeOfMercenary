@@ -13,13 +13,13 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FActiveQuestBoardDelegate);
 
 /**
- * 
- */
+*
+*/
 UCLASS()
 class LIFEOFMERCENARY_API AQuestBoard : public AMainSceneActor
 {
 	GENERATED_BODY()
-	
+
 public:
 	// Sets default values for this actor's properties
 	AQuestBoard();
@@ -46,10 +46,9 @@ public:
 	UPROPERTY(BlueprintCallable, BlueprintReadWrite, Category = "Board")
 		FActiveQuestBoardDelegate ActiveQuestBoard;
 
-
 public:
 	UFUNCTION(BlueprintCallable, Category = "Board")
-		bool SetPaperObjectonBoard(FString _PaperClassPath);
+		bool SetPaperObjectonBoard(FString _PaperClassPath, bool _paperActive);
 
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		void ActiveBoard();
@@ -64,12 +63,20 @@ private:
 	//RequestManager로부터 현재 퀘스트를 얻어옴.
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		TArray<FQuestData> GetQuest();
-	
+
 	TArray<AQuestPaper*> papers;
 
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Board")
 		void TouchEnd(ETouchIndex::Type _fingerIndex, UPrimitiveComponent* _touchedComponent);
-	
+
+	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
+		virtual void BeforeActiveEvent();
+	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
+		virtual void ActiveEvent();
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "MainSceneActor")
+		virtual void UnActiveEvent();
 };
 

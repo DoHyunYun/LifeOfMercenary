@@ -33,7 +33,6 @@ void AQuestPaper::BeginPlay()
 	//위젯 생성
 	FStringClassReference myWidgetClassRef(TEXT("/Game/UI/UI_3D_Paper.UI_3D_Paper_C"));
 	UDefaultUI* myWidget = CreateWidget<UDefaultUI>(GetWorld()->GetFirstPlayerController(), myWidgetClassRef.TryLoadClass<UDefaultUI>());
-	//myWidget->AddToViewport();
 	myWidget->parentActor = this;
 
 	paperWidget->SetWidget(myWidget);

@@ -20,5 +20,24 @@ void UWeapon::SetWeaponData(const FWeaponEquipmentData& _weaponData)
 	m_price = _weaponData.Price;
 	m_meshCode = _weaponData.MeshCode;
 	m_weaponType = ULoMFunctions::GetEnumValueFromString<EWeaponType>("EWeaponType", _weaponData.WeaponType);
+	//UItem Á¤º¸.
 	m_itemType = EItemType::WEAPON;
+}
+
+FWeaponEquipmentData UWeapon::GetWeaponData()
+{
+	FWeaponEquipmentData weaponData;
+
+	weaponData.Name = m_name;
+	weaponData.AttackPower = m_attackPower;
+	weaponData.Solidity = m_solidity;
+	weaponData.Durability = m_durabilty;
+	weaponData.Weight = m_weight;
+	weaponData.PartsType = ULoMFunctions::GetStringFromEnumValue<EEquipmentPartsType>("EEquipmentPartsType", m_partsType);
+	weaponData.ImageCode = m_imageCode;
+	weaponData.Price = m_price;
+	weaponData.MeshCode = m_meshCode;
+	weaponData.WeaponType = ULoMFunctions::GetStringFromEnumValue<EWeaponType>("EWeaponType", m_weaponType);
+
+	return weaponData;
 }

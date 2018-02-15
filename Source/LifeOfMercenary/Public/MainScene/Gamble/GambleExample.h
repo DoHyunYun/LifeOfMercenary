@@ -18,7 +18,7 @@ public:
 	virtual void BeginPlay();
 
 	UFUNCTION(BlueprintCallable, Category = "GambleExample")
-		void SetNumber();
+		int32 SetNumber();
 
 	UFUNCTION(BlueprintCallable, Category = "GambleExample")
 		void GameFinish(int32 _num);

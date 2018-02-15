@@ -20,11 +20,11 @@ bool AHUDManager::DrawUI(FString _uiName)
 {
 	if (uiAssortment.Find(_uiName) == nullptr) return false;
 
-	if (false == bEnable)	return false;
+	//if (false == bEnable)	return false;
 
 	bEnable = false;
 
-	(*uiAssortment.Find(_uiName))->SetVisibility(ESlateVisibility::Visible);
+	(*uiAssortment.Find(_uiName))->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 	return true;
 }
 

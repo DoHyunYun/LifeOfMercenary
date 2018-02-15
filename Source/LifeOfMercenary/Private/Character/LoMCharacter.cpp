@@ -3,7 +3,7 @@
 #include "LoMCharacter.h"
 
 
-ALoMCharacter::ALoMCharacter() : inventory(nullptr)
+ALoMCharacter::ALoMCharacter() : inventory(nullptr), bAttackEnable(false)
 {
 	inventory = CreateDefaultSubobject<UInventoryComponent>(TEXT("inventory"));
 }
@@ -11,7 +11,6 @@ ALoMCharacter::ALoMCharacter() : inventory(nullptr)
 void ALoMCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ALoMCharacter::Tick(float DeltaTime)

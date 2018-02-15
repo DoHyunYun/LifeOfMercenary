@@ -35,16 +35,19 @@ void AQuestBoard::BeginPlay()
 	UUserWidget* myWidget = CreateWidget<UUserWidget>(GetWorld()->GetFirstPlayerController(), myWidgetClassRef.TryLoadClass<UUserWidget>());
 	myWidget->AddToViewport();
 
+	Cast<UDefaultUI>(myWidget)->parentActor = this;
+
 	Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->AddUI(myWidget, "UI_Board");
 
 	//Delegate 할당
 	ActiveQuestBoard.AddDynamic(this, &AQuestBoard::ActiveBoard);
 
 	requestDataArray = GetQuest();
+
 	boxCollision->OnInputTouchEnd.AddDynamic(this, &AQuestBoard::TouchEnd);
 
 	//
-	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C");
+	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C", false);
 
 	AMercenaryCharacter* tempPlayerCharacter = Cast<AMercenaryCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
@@ -55,10 +58,10 @@ void AQuestBoard::RefreshPaper()
 {
 	for (int i = papers.Num(); i >= 1; --i) {
 		AActor* temp = papers.Pop();
-		temp->K2_DestroyActor();
+		temp->Destroy();
 	}
 
-	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C");
+	SetPaperObjectonBoard("/Game/Blueprints/MainScene/BP_QuestPaper.BP_QuestPaper_C", true);
 }
 
 // Called every frame
@@ -76,17 +79,18 @@ TArray<FQuestData> AQuestBoard::GetQuest()
 	AMercenaryCharacter* tempPlayerCharacter = Cast<AMercenaryCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
 	UQuestManager* questManager = tempPlayerCharacter->questManager;
+
 	TArray<int32> questArrayInt32 = questManager->GetQuestByDate(tempPlayerCharacter->date, 0, 7);
 
-	for (int i = 0; i < questArrayInt32.Num(); i++)
+	for (int32 i = 0; i < questArrayInt32.Num(); i++)
 	{
-		returnQuestArray.Add(questManager->GetQuestData(questArrayInt32[i] - 1));
+		returnQuestArray.Add((questManager->GetQuestData(questArrayInt32[i] - 1)));
 	}
 
 	return returnQuestArray;
 }
 
-bool AQuestBoard::SetPaperObjectonBoard(FString _PaperClassPath)
+bool AQuestBoard::SetPaperObjectonBoard(FString _PaperClassPath, bool _paperActive)
 {
 	//Blueprint Class Load.
 	UClass* paperBlueprint = LoadObject<UClass>(nullptr, *_PaperClassPath);
@@ -111,6 +115,14 @@ bool AQuestBoard::SetPaperObjectonBoard(FString _PaperClassPath)
 
 		tempPaper->questData = requestDataArray[i];
 		papers.Add(tempPaper);
+	}
+
+	//Paper비활성화
+	if (!_paperActive) {
+		for (int i = 0; i < papers.Num(); i++) {
+			papers[i]->SetActorHiddenInGame(true);
+			papers[i]->boxCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
 	}
 
 	return true;
@@ -145,4 +157,32 @@ void AQuestBoard::ActiveUI(bool _bBegin)
 
 	//뒤로가기 시 Delegate 호출을 위해 UI의 부모액터로 지정
 	Cast<UDefaultUI>(Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->FindUI("UI_Board"))->parentActor = this;
+}
+
+void AQuestBoard::BeforeActiveEvent()
+{
+	Super::BeforeActiveEvent();
+
+	//Paper활성화
+	for (int i = 0; i < papers.Num(); i++) {
+		papers[i]->SetActorHiddenInGame(false);
+		papers[i]->boxCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	}
+
+	Cast<AHUDManager>(GetWorld()->GetFirstPlayerController()->GetHUD())->DrawUI("UI_Board");
+}
+
+void AQuestBoard::ActiveEvent()
+{
+
+}
+
+void AQuestBoard::UnActiveEvent()
+{
+	Super::UnActiveEvent();
+
+	for (int i = 0; i < papers.Num(); i++) {
+		papers[i]->SetActorHiddenInGame(true);
+		papers[i]->boxCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 }

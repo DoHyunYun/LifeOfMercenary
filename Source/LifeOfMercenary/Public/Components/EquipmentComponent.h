@@ -20,10 +20,6 @@ class LIFEOFMERCENARY_API UEquipmentComponent : public UActorComponent
 public:	
 	UEquipmentComponent();
 
-	void UpdateEquipmentDefensivePower();
-
-	UItem** GetEquipmentArray() { return m_parts; }
-
 	UFUNCTION(BlueprintCallable, Category = EquipmentComponent)
 		void SetEquipItem(UItem* _item, EEquipmentPartsType _partsType);
 
@@ -39,6 +35,9 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+private:
+	void UpdateEquipmentPower();
+	
 public:
 	UPROPERTY(BlueprintAssignable, Category = EquipmentComponent)
 		FOnEquipItem OnEquipItem;
@@ -46,8 +45,11 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = EquipmentComponent)
 		FOnDisarmItem OnDisarmItem;
 
+public:
+	UPROPERTY(BlueprintReadWrite, Category = EquipmentComponent)
+		TArray<UItem*> parts;
+
 private:
-	UItem* m_parts[(int32)EEquipmentPartsType::MAX_PARTS];
 	float m_totalDefensivePower;
 	float m_totalAttackPower;
 };

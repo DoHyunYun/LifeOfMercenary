@@ -23,13 +23,24 @@ public:
 	template <typename EnumType>
 	static FORCEINLINE EnumType GetEnumValueFromString(const FString& _enumName, const FString& _string)
 	{
-		UEnum* Enum = FindObject<UEnum>(ANY_PACKAGE, *_enumName, true);
-		if (!Enum)
+		const UEnum* enumPtr = FindObject<UEnum>(ANY_PACKAGE, *_enumName, true);
+		if (!enumPtr)
 		{
 			return EnumType(-1);
 		}
-		return (EnumType)Enum->GetIndexByName(FName(*_string));
+		return (EnumType)enumPtr->GetIndexByName(FName(*_string));
 	}
+
+	template <typename EnumType>
+	static FORCEINLINE FString GetStringFromEnumValue(FString _typeName, EnumType _enumValue)
+	{
+		const UEnum* enumPtr = FindObject<UEnum>(ANY_PACKAGE, *_typeName, true);
+		if (!enumPtr) {
+			return FString("Invalid");
+		}
+		return enumPtr->GetNameByValue((int64)_enumValue).ToString();
+	}
+
 
 	//문자열에 해당하는 데이터테이블을 불러와준다.
 	UFUNCTION(BlueprintCallable, Category = "LoMFunctions")
