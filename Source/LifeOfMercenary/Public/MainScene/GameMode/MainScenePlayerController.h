@@ -15,5 +15,7 @@ class LIFEOFMERCENARY_API AMainScenePlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-
+public:
+	UPROPERTY(BlueprintReadWrite)
+		TArray<AMainSceneActor*> mainSceneActorArray;
 };

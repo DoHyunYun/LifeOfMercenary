@@ -65,6 +65,7 @@ public:
 	bool PointStartDirectionBoolean(AMapPoint* _point, bool _reverse = false);
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "RouteSpline")
+		//Event구간을 위한 변수. 갯수만큼 Event구간이 늘어남.
 		TArray<FSplinePartValue> splinePart;
 
 
@@ -82,14 +83,14 @@ public:
 	void EventCall(float _pos, bool _direction = true);
 
 	//Editor전용
-#if WITH_EDITOR
+//#if WITH_EDITOR
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 		UStaticMesh* splineMesh;
 	UPROPERTY(EditDefaultsOnly)
-		bool bVisibleEditorOnly = true;
+		bool bVisibleEditorOnly;
 
 	void SetPreviewText(FText _text, float _distance, FColor _color);
-#endif
+//#endif
 	
 };
