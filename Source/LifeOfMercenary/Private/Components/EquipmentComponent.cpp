@@ -13,7 +13,7 @@ UEquipmentComponent::UEquipmentComponent() : m_totalAttackPower(0.f), m_totalDef
 void UEquipmentComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	UpdateEquipmentPower();
 }
 
 void UEquipmentComponent::SetEquipItem(UItem* _item, EEquipmentPartsType _partsType)

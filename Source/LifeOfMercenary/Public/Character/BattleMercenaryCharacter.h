@@ -8,6 +8,7 @@
 #include "Runtime/Engine/Classes/Camera/CameraComponent.h"
 #include "Runtime/Engine/Classes/Curves/CurveVector.h"
 #include "Runtime/Engine/Classes/Components/BoxComponent.h"
+#include "LoMMonster.h"
 #include "BattleMercenaryCharacter.generated.h"
 
 UENUM(BlueprintType)
@@ -18,6 +19,7 @@ enum class EMercenaryStateType : uint8
 	Attack		UMETA(DisplayName = "Attack"),
 	Block		UMETA(DisplayName = "Block"),
 	Damage		UMETA(DisplayName = "Damage"),
+	Die			UMETA(DisplayName = "Die"),
 };
 
 /**
@@ -74,6 +76,8 @@ public:
 		FVector worldDir;
 	UPROPERTY(BlueprintReadWrite, Category = "BattleMercenaryCharacter")
 		FVector damageDirection;  //플레이어가 맞은 방향.
+	UPROPERTY(BlueprintReadWrite, Category = "BattleMercenaryCharacter")
+		ALoMMonster* targetMonster;
 	UPROPERTY(BlueprintReadWrite, Category = "BattleMercenaryCharacter")
 		float OrgTouchXPoint;  //처음 터치한 화면좌표X의 위치.
 	UPROPERTY(BlueprintReadWrite, Category = "BattleMercenaryCharacter")

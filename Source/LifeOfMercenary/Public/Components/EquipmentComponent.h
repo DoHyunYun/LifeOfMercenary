@@ -27,10 +27,10 @@ public:
 		void Disarm(EEquipmentPartsType _partsType);
 
 	UFUNCTION(BlueprintCallable, Category = EquipmentComponent)
-		float GetTotalDefensivePower() { return m_totalDefensivePower; }
+		float GetTotalDefensivePower() const { return m_totalDefensivePower; }
 
 	UFUNCTION(BlueprintCallable, Category = EquipmentComponent)
-		float GetTotalWeaponPower() { return m_totalAttackPower; }
+		float GetTotalWeaponPower() const { return m_totalAttackPower; }
 
 protected:
 	virtual void BeginPlay() override;

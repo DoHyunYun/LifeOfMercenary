@@ -18,9 +18,11 @@ public:
 	UDataTable* GetArmorDataTable() { return m_armorDataTable; }
 	UDataTable* GetWeaponDataTable() { return m_weaponDataTable; }
 	UDataTable* GetQuestDataTable() { return m_questDataTable; }
+	UDataTable* GetMonsterDataTable() { return m_monsterDataTable; }
 
 private:
 	UDataTable* m_armorDataTable;
 	UDataTable* m_weaponDataTable;
 	UDataTable* m_questDataTable;
+	UDataTable* m_monsterDataTable;
 };

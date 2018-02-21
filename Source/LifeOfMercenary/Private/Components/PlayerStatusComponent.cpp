@@ -13,6 +13,8 @@ void UPlayerStatusComponent::BeginPlay()
 	Super::BeginPlay();
 
 	UpdateStatus();
+	m_currentHealthPower = m_healthPower;
+	m_currentStaminaPower = m_staminaPower;
 }
 
 void UPlayerStatusComponent::UpdateStatus()

@@ -9,11 +9,6 @@ AWolf::AWolf()
 
 	AttackCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("Socket_Teeth"));
 	BodyCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform);
-}
-
-void AWolf::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
 }
 
@@ -21,4 +16,13 @@ void AWolf::BeginPlay()
 {
 	Super::BeginPlay();
 
+	SetMonsterDataFromName("Wolf");
 }
+
+void AWolf::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	
+}
+

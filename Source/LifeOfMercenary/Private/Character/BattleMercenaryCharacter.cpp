@@ -10,7 +10,7 @@
 
 ABattleMercenaryCharacter::ABattleMercenaryCharacter() : m_baseTurnRate(45.f), m_baseLookUpRate(45.f),
 currentState(EMercenaryStateType::Idle), bActiveRoll(true), bFreeAction(true), bSaveRoll(false), bNextAttack(false),
-bSaveBlock(false), bCameraRotEnable(true), damageDirection(0.f, 0.f, 0.f), cameraRotSpeed(10.f)
+bSaveBlock(false), bCameraRotEnable(true), damageDirection(0.f, 0.f, 0.f), cameraRotSpeed(10.f), targetMonster(nullptr)
 {
 	cameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("cameraSpringArm"));
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("camera"));
@@ -42,6 +42,7 @@ void ABattleMercenaryCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//이벤트 바인딩방식으로 변경 해야됨...
 	switch (currentState) {
 	case EMercenaryStateType::Idle:
 		this->GetCharacterMovement()->MaxWalkSpeed = 600;

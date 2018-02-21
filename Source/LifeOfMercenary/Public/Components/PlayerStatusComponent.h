@@ -22,17 +22,17 @@ public:
 		void UpdateStatus();
 
 	UFUNCTION(BlueprintCallable, Category = "PlayerStatusComponent")
-		float GetStrength() { return m_strength; };
+		float GetStrength() const { return m_strength; };
 	UFUNCTION(BlueprintCallable, Category = "PlayerStatusComponent")
-		float GetEndurance() { return m_endurance; };
+		float GetEndurance() const  { return m_endurance; };
 	UFUNCTION(BlueprintCallable, Category = "PlayerStatusComponent")
-		float GetMentalStrength() { return m_mentalStrength; };
+		float GetMentalStrength() const { return m_mentalStrength; };
 	UFUNCTION(BlueprintCallable, Category = "PlayerStatusComponent")
-		float GetStress() { return m_stress; };
+		float GetStress() const { return m_stress; };
 	UFUNCTION(BlueprintCallable, Category = "PlayerStatusComponent")
-		float GetFame() { return m_fame; };
+		float GetFame() const { return m_fame; };
 	UFUNCTION(BlueprintCallable, Category = "PlayerStatusComponent")
-		float GetMaxWeight() { return m_maxWeight; };
+		float GetMaxWeight() const { return m_maxWeight; };
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UMGInventory)
