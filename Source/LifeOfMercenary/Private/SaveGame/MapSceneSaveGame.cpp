@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MapSceneSaveGame.h"
 #include "MapPoint.h"
@@ -29,8 +29,6 @@ void UMapSceneSaveGame::SaveCharacter(const AMapCharacter* const _mapChar)
 	for (int i = 0; i < _mapChar->SFT.Num(); i++) {
 		m_SFT.Add(_mapChar->SFT[i]->GetUniqueID());
 	}
-	
-
 
 	UGameplayStatics::SaveGameToSlot(this, saveSlotName, userIndex);
 }
@@ -38,32 +36,12 @@ void UMapSceneSaveGame::SaveCharacter(const AMapCharacter* const _mapChar)
 
 void UMapSceneSaveGame::LoadCharacter(const UObject* _world, AMapCharacter* const _mapChar)
 {
-	//¿ùµå ¿ÀºêÁ§Æ® ¾ò¾î¿À±â.
+	//ì›”ë“œ ì˜¤ë¸Œì íŠ¸ ì–»ì–´ì˜¤ê¸°.
 	TArray<AActor*> foundActors;
 	UGameplayStatics::GetAllActorsOfClass(_world, AActor::StaticClass(), foundActors);
 
-	/*
-	//¿ùµå ¿ÀºêÁ§Æ®¸¦ ³ÖÀ» Ç×¸ñ ¸ñ·Ï.
-	TMultiMap<FString, AActor**> loadObjectList;
-
-	if(m_hasSpline != 0)
-	loadObjectList.Add(m_hasSpline, (&_mapChar->hasSpline));
-	if (m_hasPoint != 0)
-	loadObjectList.Add(m_hasPoint, (&_mapChar->hasPoint));
-	if (m_targetPoint != 0)
-	loadObjectList.Add(m_targetPoint, (&_mapChar->targetPoint));
-	*/
-
-	//¿ùµå¿¡¼­ ¾ò¾î¿Â ¿ÀºêÁ§Æ®¸¦ Ã¼Å©ÇÏ¿© ·ÎµåÇÒ Ç×¸ñ¿¡ ¼¼ÆÃ.
+	//ì›”ë“œì—ì„œ ì–»ì–´ì˜¨ ì˜¤ë¸Œì íŠ¸ë¥¼ ì²´í¬í•˜ì—¬ ë¡œë“œí•  í•­ëª©ì— ì„¸íŒ….
 	for (int i = 0; i < foundActors.Num(); i++) {
-		/*
-		AActor*** tempActor = loadObjectList.Find(UKismetSystemLibrary::GetObjectName(foundActors[i]));
-
-		if (tempActor != nullptr) {
-			**tempActor = foundActors[i];
-			loadObjectList.Remove(UKismetSystemLibrary::GetObjectName(foundActors[i]));
-			i--;
-		}*/
 		UKismetSystemLibrary::GetObjectName(_mapChar->hasPoint);
 		if(_mapChar->hasSpline != nullptr)
 			if (UKismetSystemLibrary::GetObjectName(foundActors[i]) == m_hasSpline)
@@ -74,10 +52,9 @@ void UMapSceneSaveGame::LoadCharacter(const UObject* _world, AMapCharacter* cons
 		if (_mapChar->targetPoint != nullptr)
 			if (UKismetSystemLibrary::GetObjectName(foundActors[i]) == m_targetPoint)
 				_mapChar->targetPoint = Cast<AMapPoint>(foundActors[i]);
-
 	}
 
-	//Ä³¸¯ÅÍ À§Ä¡ ¼¼ÆÃ
+	//ìºë¦­í„° ìœ„ì¹˜ ì„¸íŒ…
 	if (m_characterTransform.GetLocation() != FVector::ZeroVector) {
 		m_characterTransform.SetLocation(FVector(m_characterTransform.GetLocation().X, m_characterTransform.GetLocation().Y, m_characterTransform.GetLocation().Z + 50.0f));
 		_mapChar->SetActorTransform(m_characterTransform);
